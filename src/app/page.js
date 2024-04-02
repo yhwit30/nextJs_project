@@ -169,30 +169,28 @@ const App = () => {
 
   return (
     <>
-      <ThemeProvider theme={theme}>
-        <AppBar position="fixed">
-          <Toolbar>
-            <div className="tw-flex-1">
-              <FaBars onClick={() => setOpen(true)} className="tw-cursor-pointer" />
-            </div>
-            <div className="logo-box">
-              <a href="/" className="tw-font-bold">
-                NOTE!
-              </a>
-            </div>
-            <div className="tw-flex-1 tw-flex tw-justify-end">
-              <a href="/write">글쓰기</a>
-            </div>
-          </Toolbar>
-        </AppBar>
-        <Toolbar />
-        <form onSubmit={onSubmit}>
-          <input type="text" name="title" autoComplete="off" placeholder="할 일 입력해" />
-          <button type="submit">추가</button>
-          <button type="reset">취소</button>
-        </form>
-        {todoState.todos.length}
-      </ThemeProvider>
+      <AppBar position="fixed">
+        <Toolbar>
+          <div className="tw-flex-1">
+            <FaBars onClick={() => setOpen(true)} className="tw-cursor-pointer" />
+          </div>
+          <div className="logo-box">
+            <a href="/" className="tw-font-bold">
+              NOTE!
+            </a>
+          </div>
+          <div className="tw-flex-1 tw-flex tw-justify-end">
+            <a href="/write">글쓰기</a>
+          </div>
+        </Toolbar>
+      </AppBar>
+      <Toolbar />
+      <form onSubmit={onSubmit}>
+        <input type="text" name="title" autoComplete="off" placeholder="할 일 입력해" />
+        <button type="submit">추가</button>
+        <button type="reset">취소</button>
+      </form>
+      {todoState.todos.length}
     </>
   );
 };
