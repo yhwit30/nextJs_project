@@ -2,63 +2,169 @@
 
 import * as React from 'react';
 import { ThemeProvider } from '@mui/material/styles';
-import {
-  Button,
-  Box,
-  AppBar,
-  Toolbar,
-  Snackbar,
-  Alert as MuiAlert,
-  Backdrop,
-  CircularProgress,
-} from '@mui/material';
-import Drawer from '@mui/material/Drawer';
-import List from '@mui/material/List';
-import Divider from '@mui/material/Divider';
-import ListItem from '@mui/material/ListItem';
-import ListItemButton from '@mui/material/ListItemButton';
-import ListItemIcon from '@mui/material/ListItemIcon';
-import ListItemText from '@mui/material/ListItemText';
+import { Button, AppBar, Toolbar } from '@mui/material';
 import theme from './theme';
 import { FaBars } from 'react-icons/fa';
 
-const Alert = React.forwardRef((props, ref) => {
-  return <MuiAlert {...props} ref={ref} variant="filled" />;
-});
+const useTodoStatus = () => {
+  const [todos, setTodos] = React.useState([]);
+  const lastTodoIdRef = React.useRef(0);
 
-export default function App() {
-  const [open, setOpen] = React.useState(false);
-  const [drawerOpen, setDrawerOpen] = React.useState(false);
+  const addTodo = (newTitle) => {
+    const id = ++lastTodoIdRef.current;
 
-  const alertRef = React.useRef(null);
-
-  const toggleDrawer = (drawerOpen) => () => {
-    setDrawerOpen(drawerOpen);
+    const newTodo = {
+      id,
+      title: newTitle,
+      regDate: dateToStr(new Date()),
+    };
+    setTodos([...todos, newTodo]);
   };
 
-  const DrawerList = (
-    <Box sx={{ width: 250 }} role="presentation" onClick={toggleDrawer(false)}>
-      <List>
-        {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
-          <ListItem disablePadding>
-            <ListItemButton>
-              <ListItemText primary={text} />
-            </ListItemButton>
-          </ListItem>
-        ))}
-      </List>
-      <Divider />
-      <List>
-        {['All mail', 'Trash', 'Spam'].map((text, index) => (
-          <ListItem disablePadding>
-            <ListItemButton>
-              <ListItemText primary={text} />
-            </ListItemButton>
-          </ListItem>
-        ))}
-      </List>
-    </Box>
+  const removeTodo = (id) => {
+    const newTodos = todos.filter((todo) => todo.id != id);
+    setTodos(newTodos);
+  };
+
+  const modifyTodo = (id, title) => {
+    const newTodos = todos.map((todo) => (todo.id != id ? todo : { ...todo, title }));
+    setTodos(newTodos);
+  };
+
+  return {
+    todos,
+    addTodo,
+    removeTodo,
+    modifyTodo,
+  };
+};
+
+const NewTodoForm = ({ todoStatus }) => {
+  const [newTodoTitle, setNewTodoTitle] = useState('');
+
+  const addTodo = () => {
+    if (newTodoTitle.trim().length == 0) return;
+    const title = newTodoTitle.trim();
+    todoStatusaddTodo(title);
+    setNewTodoTitle('');
+  };
+
+  return (
+    <>
+      <div className="flex items-center gap-x-3">
+        <input
+          className="input input-bordered"
+          type="text"
+          placeholder="새 할일 입력해"
+          value={newTodoTitle}
+          onChange={(e) => setNewTodoTitle(e.target.value)}
+        />
+        <button className="btn btn-primary" onClick={addTodo}>
+          할 일 추가
+        </button>
+      </div>
+    </>
   );
+};
+
+const TodoListItem = ({ todo, todoStatus }) => {
+  const [editMode, setEditMode] = useState(false);
+  const [newTodoTitle, setNewTodoTitle] = useState(todo.title);
+  const readMode = !editMode;
+
+  const enableEditMode = () => {
+    setEditMode(true);
+  };
+
+  const removeTodo = () => {
+    todoStatus.removeTodo(todo.id);
+  };
+
+  const cancleEdit = () => {
+    setEditMode(false);
+    setNewTodoTitle(todo.title);
+  };
+  const commitEdit = () => {
+    if (newTodoTitle.trim().length == 0) return;
+
+    todoStatus.modifyTodo(todo.id, newTodoTitle.trim());
+
+    setEditMode(false);
+  };
+
+  return (
+    <li className="flex items-center gap-x-3 mb-3">
+      <span className="badge badge-accent badge-outline">{todo.id}</span>
+      {readMode ? (
+        <>
+          <span>{todo.title}</span>
+          <button className="btn btn-outline btn-accent" onClick={enableEditMode}>
+            수정
+          </button>
+          <button className="btn btn-accent" onClick={removeTodo}>
+            삭제
+          </button>
+        </>
+      ) : (
+        <>
+          <input
+            className="input input-bordered"
+            type="text"
+            placeholder="할 일 써"
+            value={newTodoTitle}
+            onChange={(e) => setNewTodoTitle(e.target.value)}
+          />
+          <button className="btn btn-accent" onClick={commitEdit}>
+            수정완료
+          </button>
+          <button className="btn btn-accent" onClick={cancleEdit}>
+            수정취소
+          </button>
+        </>
+      )}
+    </li>
+  );
+};
+
+const TodoList = ({ todoStatus }) => {
+  return (
+    <>
+      {todoStatus.todos.length == 0 ? (
+        <h4>할 일 없음</h4>
+      ) : (
+        <>
+          <h4>할 일 목록</h4>
+          <ul>
+            {todoStatus.todos.map((todo) => (
+              <TodoListItem key={todo.id} todo={todo} todoStatus={todoStatus} />
+            ))}
+          </ul>
+        </>
+      )}
+    </>
+  );
+};
+
+export default function App() {
+  const todoState = useTodoStatus(); // 리액트 커스텀 훅
+
+  const onSubmit = (e) => {
+    e.preventDefault();
+
+    const form = e.currentTarget;
+
+    form.title.value = form.title.value.trim();
+
+    if (form.title.value.length == 0) {
+      alert('할 일 써');
+      form.title.focus();
+      return;
+    }
+
+    todoState.addTodo(form.title.value);
+    form.title.value = '';
+    form.title.focus();
+  };
 
   return (
     <>
@@ -66,7 +172,7 @@ export default function App() {
         <AppBar position="fixed">
           <Toolbar>
             <div className="tw-flex-1">
-              <FaBars onClick={toggleDrawer(true)} className="tw-cursor-pointer" />
+              <FaBars onClick={() => setOpen(true)} className="tw-cursor-pointer" />
             </div>
             <div className="logo-box">
               <a href="/" className="tw-font-bold">
@@ -79,42 +185,36 @@ export default function App() {
           </Toolbar>
         </AppBar>
         <Toolbar />
-        <section className="tw-h-screen tw-flex tw-items-center tw-justify-center tw-text-[5rem]">
-          section
-        </section>
+        <form onSubmit={onSubmit}>
+          <input type="text" name="title" autoComplete="off" placeholder="할 일 입력해" />
+          <button type="submit">추가</button>
+          <button type="reset">취소</button>
+        </form>
+        {todoState.todos.length}
       </ThemeProvider>
-
-      <div>
-        <Button onClick={toggleDrawer(true)}>Open drawer</Button>
-        <Drawer open={drawerOpen} onClose={toggleDrawer(false)}>
-          {DrawerList}
-        </Drawer>
-      </div>
-
-      <Button onClick={() => setOpen(true)}>Show backdrop</Button>
-      <Backdrop
-        sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
-        open={open}
-        onClick={() => setOpen(false)}>
-        <CircularProgress color="inherit" />
-      </Backdrop>
-
-      <section>
-        <Button onClick={() => setOpen(true)}>Open Snackbar</Button>
-        <Alert ref={alertRef} severity="error" varient="filled">
-          게시물이 삭제되었습니다.
-        </Alert>
-        <Alert severity="success" varient="outlined">
-          This is a success msg!!!!!
-        </Alert>
-        <Snackbar
-          open={open}
-          autoHideDuration={2000}
-          onClose={() => setOpen(false)}
-          message="Note archived">
-          <Alert severity="warning">게시물이 삭제됨</Alert>
-        </Snackbar>
-      </section>
     </>
+  );
+}
+
+// 유틸리티
+
+// 날짜 객체 입력받아서 문장(yyyy-mm-dd hh:mm:ss)으로 반환한다.
+function dateToStr(d) {
+  const pad = (n) => {
+    return n < 10 ? '0' + n : n;
+  };
+
+  return (
+    d.getFullYear() +
+    '-' +
+    pad(d.getMonth() + 1) +
+    '-' +
+    pad(d.getDate()) +
+    ' ' +
+    pad(d.getHours()) +
+    ':' +
+    pad(d.getMinutes()) +
+    ':' +
+    pad(d.getSeconds())
   );
 }
