@@ -18,6 +18,13 @@ export default function Sub() {
   return (
     <>
       <div>sub page</div>
+      <AppBar position="static">
+        <Toolbar className="tw-justify-center">
+          <a href="/" className="tw-font-bold">
+            AppBar
+          </a>
+        </Toolbar>
+      </AppBar>
       <ThemeProvider theme={theme}>
         <Button className="tw-m-10" size="small" href="../" color="secondary" variant="outlined">
           to main page!

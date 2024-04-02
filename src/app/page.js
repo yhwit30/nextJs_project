@@ -7,32 +7,35 @@ import theme from './theme';
 import { DiAtom } from 'react-icons/di';
 import { AiFillCustomerService } from 'react-icons/ai';
 import { RiDeleteBin6Fill } from 'react-icons/ri';
+import { FaBars } from 'react-icons/fa';
 
 export default function App() {
   return (
     <>
       <div>main page</div>
-      <AppBar position="static">
-        <Toolbar className="tw-justify-center">
-          <a href="/" className="tw-font-bold">
-            NOTE!
-          </a>
-        </Toolbar>
-      </AppBar>
-
-      <Button variant="contained" onClick={() => confirm('really?')}>
-        delete
-        <RiDeleteBin6Fill />
-      </Button>
-
       <ThemeProvider theme={theme}>
-        <Button className="tw-m-10" variant="contained" href="sub/">
-          to sub page
-        </Button>
+        <AppBar position="fixed">
+          <Toolbar>
+            <div className="tw-flex-1">
+              <FaBars className="tw-cursor-pointer" />
+            </div>
+            <div className="logo-box">
+              <a href="/" className="tw-font-bold">
+                NOTE!
+              </a>
+            </div>
+            <div className="tw-flex-1 tw-flex tw-justify-end">
+              <a href="/write">글쓰기</a>
+            </div>
+          </Toolbar>
+        </AppBar>
+        <Toolbar />
+        <section className="tw-h-screen tw-flex tw-items-center tw-justify-center tw-text-[5rem]">
+          section
+        </section>
       </ThemeProvider>
-
-      <DiAtom className="tw-w-10 tw-h-10" />
-      <AiFillCustomerService className="tw-w-10 tw-h-10" />
+      <DiAtom size={300} />
+      <AiFillCustomerService size={200} />
     </>
   );
 }
