@@ -12,6 +12,13 @@ export default function App() {
   return (
     <>
       <div>main page</div>
+      <AppBar position="static">
+        <Toolbar className="tw-justify-center">
+          <a href="/" className="tw-font-bold">
+            NOTE!
+          </a>
+        </Toolbar>
+      </AppBar>
 
       <Button variant="contained" onClick={() => confirm('really?')}>
         delete
