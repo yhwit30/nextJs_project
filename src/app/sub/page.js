@@ -1,6 +1,7 @@
 'use client';
 
 import * as React from 'react';
+import { ThemeProvider } from '@mui/material/styles';
 import {
   AppBar,
   Box,
@@ -11,14 +12,17 @@ import {
   MenuIconButton,
   MenuIcon,
 } from '@mui/material';
+import theme from '../theme';
 
 export default function Sub() {
   return (
     <>
       <div>sub page</div>
-      <Button className="tw-m-10" size="small" href="../" color="secondary" variant="outlined">
-        to main page!
-      </Button>
+      <ThemeProvider theme={theme}>
+        <Button className="tw-m-10" size="small" href="../" color="secondary" variant="outlined">
+          to main page!
+        </Button>
+      </ThemeProvider>
     </>
   );
 }
