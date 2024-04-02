@@ -1,9 +1,10 @@
 'use client';
 
 import * as React from 'react';
-import { ThemeProvider } from '@mui/material/styles';
-import { Button, AppBar, Toolbar } from '@mui/material';
+import dateToStr from './dateUtil';
 import theme from './theme';
+import { ThemeProvider } from '@mui/material/styles';
+import { Button, AppBar, Toolbar, CssBaseline } from '@mui/material';
 import { FaBars } from 'react-icons/fa';
 
 const useTodoStatus = () => {
@@ -145,7 +146,7 @@ const TodoList = ({ todoStatus }) => {
   );
 };
 
-export default function App() {
+const App = () => {
   const todoState = useTodoStatus(); // 리액트 커스텀 훅
 
   const onSubmit = (e) => {
@@ -194,27 +195,13 @@ export default function App() {
       </ThemeProvider>
     </>
   );
-}
+};
 
-// 유틸리티
-
-// 날짜 객체 입력받아서 문장(yyyy-mm-dd hh:mm:ss)으로 반환한다.
-function dateToStr(d) {
-  const pad = (n) => {
-    return n < 10 ? '0' + n : n;
-  };
-
+export default function themeApp() {
   return (
-    d.getFullYear() +
-    '-' +
-    pad(d.getMonth() + 1) +
-    '-' +
-    pad(d.getDate()) +
-    ' ' +
-    pad(d.getHours()) +
-    ':' +
-    pad(d.getMinutes()) +
-    ':' +
-    pad(d.getSeconds())
+    <ThemeProvider theme={theme}>
+      <CssBaseline />
+      <App />
+    </ThemeProvider>
   );
 }
