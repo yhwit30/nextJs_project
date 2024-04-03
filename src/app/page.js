@@ -8,7 +8,7 @@ import theme from './theme';
 import dateToStr from './dateUtil';
 
 const useTodoStatus = () => {
-  console.log('실행1');
+  console.log('실행 1');
 
   const [todos, setTodos] = React.useState([]);
   const lastTodoIdRef = React.useRef(0);
@@ -148,17 +148,18 @@ const TodoList = ({ todoStatus }) => {
   );
 };
 
-let appCallCnt = 0;
+let AppCallCount = 0;
 
 const App = () => {
-  appCallCnt++;
-  console.log('appCallCnt: ' + appCallCnt);
+  AppCallCount++;
+  console.log(`AppCallCount : ${AppCallCount}`);
 
   const todosState = useTodoStatus(); // 리액트 커스텀 훅
 
   React.useEffect(() => {
-    todosState.addTodo('testing1');
-    todosState.addTodo('testing2');
+    todosState.addTodo('스쿼트');
+    todosState.addTodo('벤치');
+    todosState.addTodo('데드');
   }, []);
 
   const onSubmit = (e) => {
@@ -185,6 +186,7 @@ const App = () => {
         <Toolbar>
           <div className="tw-flex-1">
             <FaBars onClick={() => setOpen(true)} className="tw-cursor-pointer" />
+            rounded
           </div>
           <div className="logo-box">
             <a href="/" className="tw-font-bold">
@@ -208,10 +210,12 @@ const App = () => {
         <ul>
           {todosState.todos.map((todo) => (
             <li key={todo.id}>
-              <div className="tw-flex tw-flex-col tw-gap-2 tw-mt-8">
+              <div className="tw-flex tw-flex-col tw-gap-2 tw-mt-[30px]">
                 <Chip label={`번호 : ${todo.id}`} variant="outlined"></Chip>
-                <span>날짜 : {todo.regDate}</span>
-                <span>할 일 : {todo.content}</span>
+                <Chip label={`날짜 : ${todo.regDate}`} variant="outlined"></Chip>
+                <div className="tw-p-10 tw-rounded-[20px] tw-shadow tw-whitespace-pre-wrap tw-leading-relaxed">
+                  할 일 : {todo.content}
+                </div>
               </div>
             </li>
           ))}
@@ -222,7 +226,7 @@ const App = () => {
 };
 
 export default function themeApp() {
-  console.log('실행2');
+  console.log('실행 2');
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
