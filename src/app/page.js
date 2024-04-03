@@ -2,12 +2,14 @@
 
 import * as React from 'react';
 import { ThemeProvider } from '@mui/material/styles';
-import { Button, AppBar, Toolbar, CssBaseline, TextField } from '@mui/material';
+import { Button, AppBar, Toolbar, CssBaseline, TextField, Chip } from '@mui/material';
 import { FaBars } from 'react-icons/fa';
 import theme from './theme';
 import dateToStr from './dateUtil';
 
 const useTodoStatus = () => {
+  console.log('실행1');
+
   const [todos, setTodos] = React.useState([]);
   const lastTodoIdRef = React.useRef(0);
 
@@ -19,7 +21,7 @@ const useTodoStatus = () => {
       content: newContent,
       regDate: dateToStr(new Date()),
     };
-    setTodos([...todos, newTodo]);
+    setTodos((todos) => [...todos, newTodo]);
   };
 
   const removeTodo = (id) => {
@@ -146,8 +148,18 @@ const TodoList = ({ todoStatus }) => {
   );
 };
 
+let appCallCnt = 0;
+
 const App = () => {
-  const todoState = useTodoStatus(); // 리액트 커스텀 훅
+  appCallCnt++;
+  console.log('appCallCnt: ' + appCallCnt);
+
+  const todosState = useTodoStatus(); // 리액트 커스텀 훅
+
+  React.useEffect(() => {
+    todosState.addTodo('testing1');
+    todosState.addTodo('testing2');
+  }, []);
 
   const onSubmit = (e) => {
     e.preventDefault();
@@ -162,7 +174,7 @@ const App = () => {
       return;
     }
 
-    todoState.addTodo(form.content.value);
+    todosState.addTodo(form.content.value);
     form.content.value = '';
     form.content.focus();
   };
@@ -191,13 +203,13 @@ const App = () => {
           추가
         </Button>
       </form>
-      할 일 갯수 : {todoState.todos.length}
+      할 일 갯수 : {todosState.todos.length}
       <nav>
         <ul>
-          {todoState.todos.map((todo) => (
+          {todosState.todos.map((todo) => (
             <li key={todo.id}>
-              <div className="tw-flex tw-flex-col tw-gap-2">
-                <span>번호 : {todo.id}</span>
+              <div className="tw-flex tw-flex-col tw-gap-2 tw-mt-8">
+                <Chip label={`번호 : ${todo.id}`} variant="outlined"></Chip>
                 <span>날짜 : {todo.regDate}</span>
                 <span>할 일 : {todo.content}</span>
               </div>
@@ -210,6 +222,7 @@ const App = () => {
 };
 
 export default function themeApp() {
+  console.log('실행2');
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
