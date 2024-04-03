@@ -4,7 +4,7 @@ import * as React from 'react';
 import { ThemeProvider } from '@mui/material/styles';
 import { Button, AppBar, Toolbar, CssBaseline, TextField, Chip, Box } from '@mui/material';
 import { FaBars } from 'react-icons/fa';
-import theme from './theme';
+import RootTheme from './theme';
 import dateToStr from './dateUtil';
 
 function useTodoStatus() {
@@ -21,7 +21,7 @@ function useTodoStatus() {
       content: newContent,
       regDate: dateToStr(new Date()),
     };
-    setTodos((todos) => [...todos, newTodo]);
+    setTodos((todos) => [newTodo, ...todos]);
   };
 
   const removeTodo = (id) => {
@@ -157,7 +157,7 @@ function App() {
   const todosState = useTodoStatus(); // 리액트 커스텀 훅
 
   React.useEffect(() => {
-    todosState.addTodo('스쿼트');
+    todosState.addTodo('스쿼트\n런지');
     todosState.addTodo('벤치');
     todosState.addTodo('데드');
   }, []);
@@ -227,8 +227,8 @@ function App() {
                   className="tw-pt-3"
                   label={`날짜 : ${todo.regDate}`}
                   variant="outlined"></Chip>
-                <div className="tw-p-10 tw-rounded-[20px] tw-shadow tw-whitespace-pre-wrap tw-leading-relaxed tw-break-words">
-                  <Box sx={{ color: 'primary.main' }}>{todo.content}</Box>
+                <div className="tw-p-10 tw-rounded-[20px] tw-shadow tw-whitespace-pre-wrap tw-leading-relaxed tw-break-words tw-text-[--mui-color-warning-main]">
+                  {todo.content}
                 </div>
               </div>
             </li>
@@ -240,6 +240,8 @@ function App() {
 }
 
 export default function themeApp() {
+  const theme = RootTheme();
+
   console.log('실행 2');
   return (
     <ThemeProvider theme={theme}>
