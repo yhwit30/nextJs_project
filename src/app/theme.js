@@ -2,12 +2,15 @@ import { createTheme } from '@mui/material';
 
 const theme = createTheme({
   palette: {
+    typocraphy: {
+      fontFamily: ['GmarketSansMedium'],
+    },
     type: 'dark',
     primary: {
-      main: '#f0f0f0',
+      main: '#2196f3',
     },
     secondary: {
-      main: '#4caf50',
+      main: '#2196f3',
     },
   },
 });

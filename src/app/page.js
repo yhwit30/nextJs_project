@@ -1,22 +1,22 @@
 'use client';
 
 import * as React from 'react';
-import dateToStr from './dateUtil';
-import theme from './theme';
 import { ThemeProvider } from '@mui/material/styles';
-import { Button, AppBar, Toolbar, CssBaseline } from '@mui/material';
+import { Button, AppBar, Toolbar, CssBaseline, TextField } from '@mui/material';
 import { FaBars } from 'react-icons/fa';
+import theme from './theme';
+import dateToStr from './dateUtil';
 
 const useTodoStatus = () => {
   const [todos, setTodos] = React.useState([]);
   const lastTodoIdRef = React.useRef(0);
 
-  const addTodo = (newTitle) => {
+  const addTodo = (newContent) => {
     const id = ++lastTodoIdRef.current;
 
     const newTodo = {
       id,
-      title: newTitle,
+      content: newContent,
       regDate: dateToStr(new Date()),
     };
     setTodos([...todos, newTodo]);
@@ -27,8 +27,8 @@ const useTodoStatus = () => {
     setTodos(newTodos);
   };
 
-  const modifyTodo = (id, title) => {
-    const newTodos = todos.map((todo) => (todo.id != id ? todo : { ...todo, title }));
+  const modifyTodo = (id, content) => {
+    const newTodos = todos.map((todo) => (todo.id != id ? todo : { ...todo, content }));
     setTodos(newTodos);
   };
 
@@ -154,17 +154,17 @@ const App = () => {
 
     const form = e.currentTarget;
 
-    form.title.value = form.title.value.trim();
+    form.content.value = form.content.value.trim();
 
-    if (form.title.value.length == 0) {
+    if (form.content.value.length == 0) {
       alert('할 일 써');
-      form.title.focus();
+      form.content.focus();
       return;
     }
 
-    todoState.addTodo(form.title.value);
-    form.title.value = '';
-    form.title.focus();
+    todoState.addTodo(form.content.value);
+    form.content.value = '';
+    form.content.focus();
   };
 
   return (
@@ -176,7 +176,7 @@ const App = () => {
           </div>
           <div className="logo-box">
             <a href="/" className="tw-font-bold">
-              NOTE!
+              TODO!
             </a>
           </div>
           <div className="tw-flex-1 tw-flex tw-justify-end">
@@ -185,12 +185,26 @@ const App = () => {
         </Toolbar>
       </AppBar>
       <Toolbar />
-      <form onSubmit={onSubmit}>
-        <input type="text" name="title" autoComplete="off" placeholder="할 일 입력해" />
-        <button type="submit">추가</button>
-        <button type="reset">취소</button>
+      <form className="tw-flex tw-flex-col tw-p-4 tw-gap-2" onSubmit={onSubmit}>
+        <TextField name="content" autoComplete="off" label="할 일을 입력해" variant="outlined" />
+        <Button className="tw-font-bold" variant="contained" type="submit">
+          추가
+        </Button>
       </form>
-      {todoState.todos.length}
+      할 일 갯수 : {todoState.todos.length}
+      <nav>
+        <ul>
+          {todoState.todos.map((todo) => (
+            <li key={todo.id}>
+              <div className="tw-flex tw-flex-col tw-gap-2">
+                <span>번호 : {todo.id}</span>
+                <span>날짜 : {todo.regDate}</span>
+                <span>할 일 : {todo.content}</span>
+              </div>
+            </li>
+          ))}
+        </ul>
+      </nav>
     </>
   );
 };
