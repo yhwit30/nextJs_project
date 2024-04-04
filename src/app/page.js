@@ -177,8 +177,26 @@ function useEditTodoModalStatus() {
   };
 }
 
-function TodoOptionDrawer({ status }) {
+function TodoOptionDrawer({ status, todosState }) {
   const editTodoModalStatus = useEditTodoModalStatus();
+
+  const onSubmit = (e) => {
+    e.preventDefault();
+
+    const form = e.currentTarget;
+
+    form.content.value = form.content.value.trim();
+
+    if (form.content.value.length == 0) {
+      alert('할 일 써');
+      form.content.focus();
+      return;
+    }
+
+    todosState.modifyTodo(status.todoId, form.content.value);
+    form.content.value = '';
+    form.content.focus();
+  };
 
   return (
     <>
@@ -195,7 +213,12 @@ function TodoOptionDrawer({ status }) {
             <span>수정</span>
             <FaPenToSquare className="block tw-mt-[-5px]" />
           </ListItemButton>
-          <ListItemButton className="tw-p-[15px_20px] tw-flex tw-gap-2 tw-items-center">
+          <ListItemButton
+            onClick={() => {
+              alert(status.todoId + '정말 삭제?');
+              todosState.removeTodo(status.todoId);
+            }}
+            className="tw-p-[15px_20px] tw-flex tw-gap-2 tw-items-center">
             <span>삭제</span>
             <FaTrash className="block tw-mt-[-5px]" />
           </ListItemButton>
@@ -205,7 +228,23 @@ function TodoOptionDrawer({ status }) {
         open={editTodoModalStatus.opened}
         onClose={editTodoModalStatus.close}
         className="tw-flex tw-justify-center tw-items-center">
-        <div className="tw-bg-white tw-p-10 tw-rounded-[20px]">안녕</div>
+        <>
+          <div className="tw-bg-white tw-p-10 tw-rounded-[20px]">
+            <form onSubmit={(e) => onSubmit(e)} className="tw-flex tw-flex-col tw-p-4 tw-gap-2">
+              <TextField
+                minRows={3}
+                maxRows={10}
+                multiline
+                name="content"
+                autoComplete="off"
+                label="할 일 써"
+              />
+              <Button variant="contained" className="tw-font-bold" type="submit">
+                수정
+              </Button>
+            </form>
+          </div>
+        </>
       </Modal>
     </>
   );
@@ -216,7 +255,7 @@ const TodoList = ({ todosState }) => {
 
   return (
     <>
-      <TodoOptionDrawer status={todoOptionDrawerStatus} />
+      <TodoOptionDrawer status={todoOptionDrawerStatus} todosState={todosState} />
       <nav>
         할 일 갯수 : {todosState.todos.length}
         <ul>
