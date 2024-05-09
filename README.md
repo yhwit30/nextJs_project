@@ -27,40 +27,46 @@ This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-opti
 
 - 리액트는 태그를 컴포넌트화 하여 사용할 수 있다는 것이 강점이다.
 
-아래와 같이 컴포넌트화한 태그를 사용하면 간략하게 전체 태그를 볼 수 있다.
+![image](https://github.com/yhwit30/nextJs_project/assets/153142837/62b0d0a7-5a22-4153-bff6-ce7a9a633749)
+
+
+컴포넌트화한 태그를 사용했기 때문에 간략하게 전체 태그를 볼 수 있다.
 
 ![image](https://github.com/yhwit30/nextJs_project/assets/153142837/c9659bde-d3ba-4316-ae83-94f33dc0dfb4)
 
-<div>↓</div>
 
-
+<p>&#128317;</p> 
+컴포넌트화 태그들
 <div>
 - NoticeSnackbar
 </div>
-  <br><br>
+<br>
   
 ![image](https://github.com/yhwit30/nextJs_project/assets/153142837/72aebc7d-be63-4095-a1d4-e3389048b526)
 
 <div>
+  <br><br>
+  
 - NewTodoForm
 </div>
-<br><br>
+<br>
 
 ![image](https://github.com/yhwit30/nextJs_project/assets/153142837/276523a1-0c46-4687-9bc7-f34dbac37468)
 
 <div>
+<br><br>
+  
 - TodoList
 </div>
-<br><br>
+<br>
 
 ![image](https://github.com/yhwit30/nextJs_project/assets/153142837/a3e1a378-448c-4851-97ff-f7c50900c90e)
 
 
-<hr>
-
-![image](https://github.com/yhwit30/nextJs_project/assets/153142837/62b0d0a7-5a22-4153-bff6-ce7a9a633749)
 
 
+<br><br>
+## (추가)안드로이드 스튜디오에서 실행
 
 ![image](https://github.com/yhwit30/nextJs_project/assets/153142837/9916ec8b-2693-47e6-955b-918c79f7054a)
 
