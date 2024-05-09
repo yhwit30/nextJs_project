@@ -71,6 +71,7 @@ This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-opti
 ![image](https://github.com/yhwit30/nextJs_project/assets/153142837/9916ec8b-2693-47e6-955b-918c79f7054a)
 
 
+![image](https://github.com/yhwit30/nextJs_project/assets/153142837/4340c057-414c-4bfe-9911-66cebfa7f4df)
 
 
 
