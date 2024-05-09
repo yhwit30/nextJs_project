@@ -20,23 +20,51 @@ You can start editing the page by modifying `app/page.js`. The page auto-updates
 
 This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
 
-## Learn More
 
-To learn more about Next.js, take a look at the following resources:
+<br><br>
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 할 일 만들기 프로젝트
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+- 리액트는 태그를 컴포넌트화 하여 사용할 수 있다는 것이 강점이다.
 
-## Deploy on Vercel
+아래와 같이 컴포넌트화한 태그를 사용하면 간략하게 전체 태그를 볼 수 있다.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+![image](https://github.com/yhwit30/nextJs_project/assets/153142837/c9659bde-d3ba-4316-ae83-94f33dc0dfb4)
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+<div>↓</div>
 
 
-# 할 일 만들기 프로젝트 시작
+<div>
+- NoticeSnackbar
+</div>
+  <br><br>
+  
+![image](https://github.com/yhwit30/nextJs_project/assets/153142837/72aebc7d-be63-4095-a1d4-e3389048b526)
+
+<div>
+- NewTodoForm
+</div>
+<br><br>
+
+![image](https://github.com/yhwit30/nextJs_project/assets/153142837/276523a1-0c46-4687-9bc7-f34dbac37468)
+
+<div>
+- TodoList
+</div>
+<br><br>
+
+![image](https://github.com/yhwit30/nextJs_project/assets/153142837/a3e1a378-448c-4851-97ff-f7c50900c90e)
+
+
+<hr>
+
+![image](https://github.com/yhwit30/nextJs_project/assets/153142837/62b0d0a7-5a22-4153-bff6-ce7a9a633749)
+
+
+
+![image](https://github.com/yhwit30/nextJs_project/assets/153142837/9916ec8b-2693-47e6-955b-918c79f7054a)
+
+
 
 
 
